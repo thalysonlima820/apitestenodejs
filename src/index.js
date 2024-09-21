@@ -1,19 +1,6 @@
 const express = require('express');
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
-
-// Caminho para a pasta 'certificado' fora da pasta 'src'
-const privateKey = fs.readFileSync(path.resolve(__dirname, '../certificado/privkey.pem'), 'utf8');
-const certificate = fs.readFileSync(path.resolve(__dirname, '../certificado/cert.pem'), 'utf8');
-
-const credentials = {
-  key: privateKey,
-  cert: certificate
-};
-
 const app = express();
-const port = 3000; // Porta para HTTPS
+const port = process.env.PORT || 3000; // Usar a porta definida pela Vercel ou 3000 como fallback
 
 // Importar rotas de usuário
 const userRoutes = require('../routes/userRoutes');
@@ -35,7 +22,7 @@ app.get('/', (req, res) => {
       `);
 });
 
-// Iniciar servidor HTTPS
-https.createServer(credentials, app).listen(port, () => {
-  console.log(`Servidor rodando em HTTPS na porta ${port}`);
+// Iniciar o servidor
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
