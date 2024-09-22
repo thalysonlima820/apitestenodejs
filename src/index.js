@@ -1,15 +1,18 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; // Usar a porta definida pela Vercel ou 3000 como fallback
+const authenticateToken = require('../config/authenticateToken');
 
 // Importar rotas de usuário
 const userRoutes = require('../routes/userRoutes');
+const routerLogin = require('../routes/userLoginRoutes');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rota de usuários
-app.use('/user', userRoutes);
+app.use('/user', authenticateToken,  userRoutes);
+app.use('/login', routerLogin);
 
 // Rota home
 app.get('/', (req, res) => {

@@ -1,0 +1,12 @@
+     "build": "tsc",
+ npm install -g vercel
+
+ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+vercel
+
+npm install -g yarn
+
+vercel --prod
+
+yarn start
